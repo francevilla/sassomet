@@ -203,9 +203,19 @@ npx skills@1.9.0 add laltaffer/claude-cmo-skill --skill cmo -a claude-code -y
 npx skills@1.9.0 add morluto/rea --skill reverse-engineer-anything -a claude-code -y
 ```
 
-Il lock è passato a **56 voci** e va committato. REA e CMO sono state installate
-come *copie*, non come symlink, quindi restano leggibili anche senza il repo
-sorgente.
+Il lock è passato a **56 voci** e va committato.
+
+**Nota sul layout.** `skills add` aveva installato `cmo` e
+`reverse-engineer-anything` come copie dirette in `.claude/skills/`, mentre le
+altre 54 stavano in `.agents/skills/` con symlink da `.claude/skills/`. Il
+risultato era incoerente: `experimental_install --dry-run` le considerava
+"da ripristinare" e un successivo ripristino le avrebbe piazzate in
+`.agents/skills/` sopra le copie esistenti. Ho quindi spostato le due cartelle
+in `.agents/skills/` e creato i symlink in `.claude/skills/`, uniformando il
+layout. Verifica: `experimental_install --dry-run` → *"56 skills already
+installed"*, `list` → 56, `check` → 56 verificate, nessuna con modifiche locali
+(gli hash del lock corrispondono a quanto su disco, quindi lo spostamento non ha
+alterato i contenuti).
 
 **Verifica finale.** ✅ `npx skills list` → 56 skill di progetto;
 `npx skills check` → 50 già aggiornate, 6 con update disponibile.
