@@ -6,13 +6,43 @@
 
 ---
 
-## 0. Avviso importante: il workspace non è il repository Eniminds
+## ESITO — ripristino completato
 
-Questo checkout (`/home/user/sassomet`) contiene **solo `README.md`**. Non contiene il progetto Eniminds, né `STRATEGIA-CMS-PROPRIETARIO.md`, né `skills-lock.json`, né alcuna cartella di skill.
+Il contesto è stato portato in `sassomet` e le quattro skill sono installate e
+tracciate nel lock. Dettagli in §5.
 
-Il materiale Eniminds si trova in un **repository separato**: `francevilla/Eniminds`, branch `main`, HEAD `4cac552e` (merge della PR #6 *"Document proprietary AI CMS product strategy"*). È da lì che ho letto il documento della strategia e il lock file delle skill.
+| Skill | Chiave nel lock | Installata | Nel lock | Fonte |
+| --- | --- | --- | --- | --- |
+| **Copywriting** | `copywriting` | ✅ Sì | ✅ Sì | `coreyhaines31/marketingskills` @ `5b2b400e` |
+| **Taste** | `design-taste-frontend` | ✅ Sì | ✅ Sì | `Leonxlnx/taste-skill` @ `6c0b5c78` |
+| **REA** | `reverse-engineer-anything` | ✅ Sì | ✅ Sì | `morluto/rea` @ `aa78851b` |
+| **CMO** | `cmo` | ✅ Sì | ✅ Sì | `laltaffer/claude-cmo-skill` @ `0b3a5b98` |
 
-Conseguenza pratica: **`npx skills experimental_install` non ha nulla da ripristinare in questa cartella**, perché non esiste un `skills-lock.json` a livello di progetto. Questo è il primo punto da decidere (vedi §4, passo 0).
+`skills-lock.json` passa da 54 a **56 voci**; `npx skills list` conta **56 skill**
+di progetto. Il resto di questo documento conserva la verifica originale, con gli
+stati aggiornati dove serviva.
+
+---
+
+## 0. Contesto: da dove viene il materiale
+
+> **Aggiornato:** il contesto è stato portato in `sassomet` (scelta effettuata).
+> Questa sezione descrive la situazione *al momento della verifica*, che era il
+> punto di partenza.
+
+Al momento della verifica questo checkout (`/home/user/sassomet`) conteneva
+**solo `README.md`**: non aveva il progetto Eniminds, né
+`STRATEGIA-CMS-PROPRIETARIO.md`, né `skills-lock.json`, né alcuna cartella di
+skill.
+
+Il materiale Eniminds si trovava in un **repository separato**:
+`francevilla/Eniminds`, branch `main`, HEAD `4cac552e` (merge della PR #6
+*"Document proprietary AI CMS product strategy"*). È da lì che ho letto il
+documento della strategia e il lock file delle skill.
+
+Conseguenza pratica, ora risolta: **`npx skills experimental_install` non aveva
+nulla da ripristinare in questa cartella**, perché non esisteva un
+`skills-lock.json` a livello di progetto. Era il primo punto da decidere.
 
 ---
 
@@ -33,7 +63,9 @@ Conseguenza pratica: **`npx skills experimental_install` non ha nulla da riprist
 
 ### 2.1 Situazione reale dei file
 
-| Percorso | Esiste in questo workspace | Esiste nel repo Eniminds |
+*Stato al momento della verifica, prima del porting del contesto.*
+
+| Percorso | Esisteva in questo workspace | Nel repo Eniminds |
 | --- | --- | --- |
 | `skills-lock.json` | **No** | **Sì** (`main`, 54 voci, `version: 2`) |
 | `.agents/skills/` | No | Sì, ma **escluso dal repository** (`.gitignore`) |
@@ -42,18 +74,25 @@ Conseguenza pratica: **`npx skills experimental_install` non ha nulla da riprist
 | `skills/adaptive-web-architect-cro/` | No | **Sì, committato** (skill autoriale locale) |
 | `~/.claude/skills/` (globale) | No | — |
 
-Quindi: **nessuna delle quattro skill è materialmente installata in questa sessione**. Le copie locali non sono mai state committate (scelta deliberata del progetto, documentata nel README di Eniminds), e in questo workspace non esiste nemmeno il lock file.
+Quindi: **nessuna delle quattro skill era materialmente installata in questa sessione**. Le copie locali non sono mai state committate (scelta deliberata del progetto, documentata nel README di Eniminds), e in questo workspace non esisteva nemmeno il lock file.
+
+*Dopo il porting: `.gitignore` replica le esclusioni di Eniminds, quindi le
+cartelle skill restano fuori dal repository mentre `skills-lock.json` è
+committato.*
 
 ### 2.2 Esito per singola skill
 
-| Skill richiesta | Chiave nel lock | Nel lock? | Fonte | Ripristinabile con `experimental_install`? |
+*Colonna "Nel lock?" = stato al momento della verifica. Tutte e quattro sono ora
+nel lock e installate (vedi ESITO in testa).*
+
+| Skill richiesta | Chiave nel lock | Nel lock? *(al momento della verifica)* | Fonte | Ripristinabile con il solo `experimental_install`? |
 | --- | --- | --- | --- | --- |
 | **Copywriting** | `copywriting` | ✅ Sì | `coreyhaines31/marketingskills` @ `5b2b400e` → `skills/copywriting/SKILL.md`, hash `6b86be15…` | ✅ Sì |
 | **Taste** | `design-taste-frontend` | ✅ Sì | `Leonxlnx/taste-skill` @ `6c0b5c78…` → `skills/taste-skill/SKILL.md`, hash `b10eab0a…` | ✅ Sì |
-| **REA** | — | ❌ **No** | `morluto/rea` → skill `reverse-engineer-anything` | ❌ **No** |
-| **CMO** | — | ❌ **No** | `laltaffer/claude-cmo-skill` → skill `cmo` | ❌ **No** |
+| **REA** | `reverse-engineer-anything` | ❌ **No** | `morluto/rea` → skill `reverse-engineer-anything` | ❌ **No** |
+| **CMO** | `cmo` | ❌ **No** | `laltaffer/claude-cmo-skill` → skill `cmo` | ❌ **No** |
 
-Il lock registra **54 skill**: 53 da `coreyhaines31/marketingskills` (tutte quelle che il repo pubblica, verify via API: 53 directory in `skills/`) e 1 da `Leonxlnx/taste-skill`. **REA e CMO non compaiono in nessuna delle due fonti** — sono skill di terze fonti che non sono mai state registrate.
+Il lock registrava **54 skill**: 53 da `coreyhaines31/marketingskills` (tutte quelle che il repo pubblica, verify via API: 53 directory in `skills/`) e 1 da `Leonxlnx/taste-skill`. **REA e CMO non comparivano in nessuna delle due fonti** — erano skill di terze fonti mai registrate.
 
 ### 2.3 Verifiche eseguite con la CLI reale (`skills@1.9.0`)
 
@@ -139,34 +178,60 @@ Da verificare **prima** di usarla:
 
 ---
 
-## 4. Sequenza consigliata
+## 4. Sequenza — eseguita
 
-**Passo 0 — decidere dove vive il lavoro (bloccante).** Due opzioni:
+**Passo 0 — decidere dove vive il lavoro.** ✅ Scelta l'opzione (B): portare il
+contesto in `sassomet`. Copiati `STRATEGIA-CMS-PROPRIETARIO.md`,
+`ANALISI-SITO-ENIMINDS.md` e `skills-lock.json` da `francevilla/Eniminds@main`;
+`.gitignore` replica le esclusioni delle cartelle skill. **Il codice del sito e
+del CMS Eniminds non è stato copiato**: resta in `francevilla/Eniminds` per
+evitare due serie di pin e di sorgenti che divergono.
 
-- **(A) Continuare in `francevilla/Eniminds`:** clonare quel repo e lavorarci. `skills-lock.json`, strategia, codice, test e deploy sono già lì. È la strada coerente con "continuiamo dal repository Eniminds".
-- **(B) Portare il contesto in `sassomet`:** copiare almeno `skills-lock.json` (e la sezione "Skill di progetto" del README) più `STRATEGIA-CMS-PROPRIETARIO.md`. Attenzione: duplicare il lock in due repository genera due serie di pin che possono divergere.
-
-**Passo 1 — ripristinare le 54 skill tracciate** (dopo il passo 0):
+**Passo 1 — ripristinare le 54 skill tracciate.** ✅ Eseguito:
 
 ```bash
 npx skills@1.9.0 experimental_install -y -a claude-code
-npx skills@1.9.0 list && npx skills@1.9.0 check
 ```
 
-**Passo 2 — aggiungere REA e CMO** e committare il lock aggiornato:
+Risultato: 54 skill in `.agents/skills/` (45 MB, 2093 file) e 54 symlink in
+`.claude/skills/` che puntano alle copie canoniche, così Claude Code le legge.
+
+**Passo 2 — aggiungere REA e CMO.** ✅ Eseguito:
 
 ```bash
 npx skills@1.9.0 add laltaffer/claude-cmo-skill --skill cmo -a claude-code -y
 npx skills@1.9.0 add morluto/rea --skill reverse-engineer-anything -a claude-code -y
-git add skills-lock.json && git commit -m "Track cmo and reverse-engineer-anything skills"
 ```
 
-**Passo 3 — sbloccare REA sul sito live** (se serve davvero): uscita di rete verso `eniminds.com` + conferma che l'ispezione resti passiva e autorizzata.
+Il lock è passato a **56 voci** e va committato. REA e CMO sono state installate
+come *copie*, non come symlink, quindi restano leggibili anche senza il repo
+sorgente.
 
-**Già disponibile senza fare nulla:** `skills/adaptive-web-architect-cro/` è committata in Eniminds (skill autoriale locale, "Senior Web Designer / CRO / Marketing Psychologist" con fase di discovery obbligatoria).
+**Verifica finale.** ✅ `npx skills list` → 56 skill di progetto;
+`npx skills check` → 50 già aggiornate, 6 con update disponibile.
+
+⚠️ **Gli update non sono stati applicati di proposito.** `experimental_install`
+scarica il **commit fissato** nel lock, non l'ultimo: è quello che rende il
+ripristino riproducibile. `npx skills update` sposterebbe i pin in avanti e va
+fatto come cambiamento deliberato, non come conseguenza di un ripristino. Le 6
+skill con update disponibile sono: `aso`, `customer-research`, `marketing-loops`,
+`prospecting`, `seo-audit`, `social`.
+
+**Passo 3 — sbloccare REA sul sito live.** ⏸ Non eseguito, resta bloccato: il
+filtro di rete di questo sandbox non raggiunge `eniminds.com`. Servirebbe
+un'eccezione di rete più un'autorizzazione esplicita all'ispezione passiva.
+
+**Già disponibile senza fare nulla:** `skills/adaptive-web-architect-cro/` è
+committata in Eniminds (skill autoriale locale, "Senior Web Designer / CRO /
+Marketing Psychologist" con fase di discovery obbligatoria).
 
 ---
 
 ## 5. Riepilogo in una riga
 
-Copywriting e Taste **sono recuperabili** dal lock con un solo comando (manca solo il `skills-lock.json` in questo workspace); **REA e CMO non sono mai state registrate** e vanno aggiunte ex-novo con `npx skills add`, fissandole nel lock — e REA resta comunque bloccata verso il sito Eniminds per il filtro di rete del sandbox.
+Contesto portato in `sassomet` e ripristino completato: **56 skill installate e
+tracciate nel lock**, comprese le quattro richieste. Copywriting e Taste sono
+tornate dal lock con `experimental_install`; REA e CMO, che non erano mai state
+registrate, sono state aggiunte ex-novo con `npx skills add` e fissate nel lock.
+Resta un solo limite aperto: REA non può raggiungere `eniminds.com` per il filtro
+di rete del sandbox.
