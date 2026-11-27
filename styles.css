@@ -173,18 +173,20 @@ textarea {
   gap: 0.7rem;
 }
 
-.brand__monogram {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--signal-500);
-  color: var(--white);
-  display: grid;
-  place-items: center;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 0.9rem;
-  letter-spacing: -0.04em;
+.brand__emblem {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--stone-50);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.brand__emblem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .brand__title {
@@ -1029,6 +1031,24 @@ textarea {
   gap: 2.5rem;
   padding-bottom: 2.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer__logo-card {
+  display: inline-block;
+  width: 156px;
+  height: 104px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--stone-50);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.footer__logo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.22);
 }
 
 .footer h4 {
