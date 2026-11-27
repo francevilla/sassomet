@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#FAF9F5"/>
+  <!-- Pensilina M + Tettoia -->
+  <path d="M9 45L24 19L32 27L40 19L46 28H57L53 33H43.5L39.5 27L32 34L24.5 27L14.5 45H9Z" fill="#1F4035"/>
+  <rect x="46" y="34" width="4.5" height="11" fill="#1F4035"/>
+  <!-- Goccia Metano + Fulmine EV -->
+  <path d="M33.2 29.5C33.2 29.5 26.5 34.5 26.5 40C26.5 43.8 29.5 46.5 33 46.5C36.6 46.5 39.2 43.8 39.2 40.3C39.2 38.7 38.6 37.3 37.8 36.2H33.8L35.2 32.5L33.2 29.5Z" fill="#C4532D"/>
+  <path d="M34.2 33.2L30.2 40.2H33L31.4 45.8L36.2 38.5H33.3L34.2 33.2Z" fill="#FAF9F5"/>
+</svg>
